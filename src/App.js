@@ -3,6 +3,7 @@ import './App.css';
 import Board from './components/Board';
 import ScoreBoard from './components/ScoreBoard';
 
+import ResetButton from "./components/ResetButton"
 function App() {
 
   const WIN_CONDITIONS = [
@@ -63,7 +64,11 @@ function App() {
   }
 
   const resetBoard = () => {
-    alert("The " + checkWinner(board) + " Player Win")
+    if (checkWinner(board) === "X" || "O") {
+      alert("The " + checkWinner(board) + " Player Win")
+    } else {
+      alert("No one wins")
+    }
     setGameOver(false);
     setBoard(Array(9).fill(null))
   }
@@ -72,6 +77,7 @@ function App() {
     <div className="App">
       <ScoreBoard scores={scores} xPlaying={xPlaying} />
       <Board board={board} onClick={gameOver ? resetBoard : handleBoxClick} />
+      <ResetButton resetBoard={resetBoard} />
     </div>
   );
 }
