@@ -22,8 +22,7 @@ function App() {
   const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
   const [gameOver, setGameOver] = useState(false);
 
-
-  const handleBoxClick = (boxIdx) => {
+  function handleBoxClick(boxIdx) {
     const updateBoard = board.map((value, idx) => {
       if (idx === boxIdx) {
         return xPlaying === true ? "X" : "O";
@@ -38,6 +37,7 @@ function App() {
         let { oScore } = scores;
         oScore += 1
         setScores({ ...scores, oScore })
+
       } else {
         let { xScore } = scores;
         xScore += 1
@@ -45,17 +45,13 @@ function App() {
       }
     }
 
-    console.log(scores)
-
     setBoard(updateBoard);
     setPlaying(!xPlaying);
   }
 
-
-  const checkWinner = (board) => {
+  function checkWinner(board) {
     for (let i = 0; i < WIN_CONDITIONS.length; i++) {
       const [x, y, z] = WIN_CONDITIONS[i];
-
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
         setGameOver(true)
         return board[x];
@@ -63,12 +59,16 @@ function App() {
     }
   }
 
-  const resetBoard = () => {
-    if (checkWinner(board) === "X" || "O") {
+  function Winner() {
+    if (gameOver === true) {
       alert("The " + checkWinner(board) + " Player Win")
     } else {
       alert("No one wins")
     }
+    resetBoard()
+  }
+
+  function resetBoard() {
     setGameOver(false);
     setBoard(Array(9).fill(null))
   }
@@ -76,7 +76,7 @@ function App() {
   return (
     <div className="App">
       <ScoreBoard scores={scores} xPlaying={xPlaying} />
-      <Board board={board} onClick={gameOver ? resetBoard : handleBoxClick} />
+      <Board board={board} onClick={gameOver ? Winner() : handleBoxClick} />
       <ResetButton resetBoard={resetBoard} />
     </div>
   );
