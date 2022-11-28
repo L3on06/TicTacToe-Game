@@ -4,6 +4,8 @@ import Board from './components/Board';
 import ScoreBoard from './components/ScoreBoard';
 
 import ResetButton from "./components/ResetButton"
+
+import { motion, AnimatePresence } from 'framer-motion'
 function App() {
 
   const WIN_CONDITIONS = [
@@ -73,11 +75,19 @@ function App() {
     setBoard(Array(9).fill(null))
   }
 
+  function ScoreResetBoard() {
+    setScores({ xScore: 0, oScore: 0 })
+    setGameOver(false);
+    setBoard(Array(9).fill(null))
+  }
+
+
+
   return (
     <div className="App">
       <ScoreBoard scores={scores} xPlaying={xPlaying} />
       <Board board={board} onClick={gameOver ? Winner() : handleBoxClick} />
-      <ResetButton resetBoard={resetBoard} />
+      <ResetButton resetBoard={resetBoard} ScoreResetBoard={ScoreResetBoard} />
     </div>
   );
 }
