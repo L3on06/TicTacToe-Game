@@ -2,12 +2,10 @@ import { useState } from 'react';
 import './App.css';
 import Board from './components/Board';
 import ScoreBoard from './components/ScoreBoard';
-
 import ResetButton from "./components/ResetButton"
+import Modal from './components/Modal';
 
-import { motion, AnimatePresence } from 'framer-motion'
 function App() {
-
   const WIN_CONDITIONS = [
     [0, 1, 2],
     [3, 4, 5],
@@ -23,6 +21,7 @@ function App() {
   const [xPlaying, setPlaying] = useState(true);
   const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
   const [gameOver, setGameOver] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   function handleBoxClick(boxIdx) {
     const updateBoard = board.map((value, idx) => {
@@ -32,6 +31,7 @@ function App() {
         return value;
       }
     })
+
     const winner = checkWinner(updateBoard);
 
     if (winner) {
@@ -39,7 +39,6 @@ function App() {
         let { oScore } = scores;
         oScore += 1
         setScores({ ...scores, oScore })
-
       } else {
         let { xScore } = scores;
         xScore += 1
@@ -63,7 +62,8 @@ function App() {
 
   function Winner() {
     if (gameOver === true) {
-      alert("The " + checkWinner(board) + " Player Win")
+      setShowModal(true)
+      // console.log("The " + checkWinner(board) + " Player Win")
     } else {
       alert("No one wins")
     }
@@ -82,9 +82,9 @@ function App() {
   }
 
 
-
   return (
     <div className="App">
+      <Modal showModal={showModal} checkWinner={checkWinner} />
       <ScoreBoard scores={scores} xPlaying={xPlaying} />
       <Board board={board} onClick={gameOver ? Winner() : handleBoxClick} />
       <ResetButton resetBoard={resetBoard} ScoreResetBoard={ScoreResetBoard} />
