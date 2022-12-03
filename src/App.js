@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import './App.css';
-import Board from './components/Board';
-import ScoreBoard from './components/ScoreBoard';
-import ResetButton from "./components/ResetButton"
-import Modal from './components/Modal';
+import Board from './components/Board/Board';
+import ScoreBoard from './components/ScoreBoard/ScoreBoard';
+import ResetButton from "./components/ResetButton/ResetButton"
+import ModalWinner from './components/Modal/ModalWinner';
+import ModalNoWinner from "./components/Modal/ModalNoWinner"
 
 function App() {
   const WIN_CONDITIONS = [
@@ -21,7 +22,8 @@ function App() {
   const [xPlaying, setPlaying] = useState(true);
   const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
   const [gameOver, setGameOver] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [modalWinner, setModalWinner] = useState(false);
+  const [modalNoWinner, setModalNoWinner] = useState(false);
 
   function handleBoxClick(boxIdx) {
     const updateBoard = board.map((value, idx) => {
@@ -39,11 +41,14 @@ function App() {
         let { oScore } = scores;
         oScore += 1
         setScores({ ...scores, oScore })
-      } else {
+      } if (winner === "X") {
         let { xScore } = scores;
         xScore += 1
         setScores({ ...scores, xScore })
       }
+    }
+    if (updateBoard.every(element => element !== null)) {
+      setModalNoWinner(true)
     }
 
     setBoard(updateBoard);
@@ -62,10 +67,7 @@ function App() {
 
   function Winner() {
     if (gameOver === true) {
-      setShowModal(true)
-      // console.log("The " + checkWinner(board) + " Player Win")
-    } else {
-      alert("No one wins")
+      setModalWinner(true)
     }
     resetBoard()
   }
@@ -84,7 +86,8 @@ function App() {
 
   return (
     <div className="App">
-      <Modal showModal={showModal} checkWinner={checkWinner} />
+      <ModalWinner modalWinner={modalWinner} checkWinner={checkWinner} />
+      <ModalNoWinner modalNoWinner={modalNoWinner} checkWinner={checkWinner} />
       <ScoreBoard scores={scores} xPlaying={xPlaying} />
       <Board board={board} onClick={gameOver ? Winner() : handleBoxClick} />
       <ResetButton resetBoard={resetBoard} ScoreResetBoard={ScoreResetBoard} />

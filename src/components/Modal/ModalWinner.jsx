@@ -7,18 +7,18 @@ const backdrop = {
     hidden: { opacity: 0 }
 }
 
-function Modal({ showModal }) {
+function Modal({ modalWinner }) {
 
     return (
         <AnimatePresence exitBeforeEnter>
-            {showModal && (
+            {modalWinner && (
                 <motion.div className="backdrop"
                     variants={backdrop}
                     initial="hidden"
                     animate="visible"
                 >
                     <motion.div className="modal">
-                        <p>loni</p>
+                        <p>Winner</p>
                     </motion.div>
                 </motion.div>
             )}
