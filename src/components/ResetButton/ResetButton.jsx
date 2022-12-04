@@ -2,6 +2,7 @@ import React from "react";
 import "./ResetButton.css"
 
 const ResetButton = ({ resetBoard, ScoreResetBoard }) => {
+
     return (
         <div>
             <button className="reset-btn" onClick={resetBoard}>Reset Board</button>

@@ -3,8 +3,8 @@ import './App.css';
 import Board from './components/Board/Board';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import ResetButton from "./components/ResetButton/ResetButton"
-import ModalWinner from './components/Modal/ModalWinner';
-import ModalNoWinner from "./components/Modal/ModalNoWinner"
+import ModalWinner from './components/Modals/ModalWinner';
+import ModalNoWinner from "./components/Modals/ModalNoWinner"
 
 function App() {
   const WIN_CONDITIONS = [
@@ -24,6 +24,8 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [modalWinner, setModalWinner] = useState(false);
   const [modalNoWinner, setModalNoWinner] = useState(false);
+  const [showWinner, setShowWinner] = useState("");
+
 
   function handleBoxClick(boxIdx) {
     const updateBoard = board.map((value, idx) => {
@@ -60,10 +62,12 @@ function App() {
       const [x, y, z] = WIN_CONDITIONS[i];
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
         setGameOver(true)
+        setShowWinner(board[x])
         return board[x];
       }
     }
   }
+
 
   function Winner() {
     if (gameOver === true) {
@@ -73,20 +77,21 @@ function App() {
   }
 
   function resetBoard() {
-    setGameOver(false);
     setBoard(Array(9).fill(null))
+    setGameOver(false);
+    // setModalWinner(false);
   }
 
   function ScoreResetBoard() {
     setScores({ xScore: 0, oScore: 0 })
-    setGameOver(false);
     setBoard(Array(9).fill(null))
+    setGameOver(false);
   }
 
 
   return (
     <div className="App">
-      <ModalWinner modalWinner={modalWinner} checkWinner={checkWinner} />
+      <ModalWinner modalWinner={modalWinner} checkWinner={checkWinner} showWinner={showWinner} />
       <ModalNoWinner modalNoWinner={modalNoWinner} checkWinner={checkWinner} />
       <ScoreBoard scores={scores} xPlaying={xPlaying} />
       <Board board={board} onClick={gameOver ? Winner() : handleBoxClick} />
