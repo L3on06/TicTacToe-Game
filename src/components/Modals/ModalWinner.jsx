@@ -1,6 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from 'framer-motion'
 import "./Modal.css"
+import PlayAgain from "../PlayAgainButton/PlayAgainButton"
 
 
 const backdrop = {
@@ -8,7 +9,7 @@ const backdrop = {
     hidden: { opacity: 0 }
 }
 
-function Modal({ modalWinner, showWinner }) {
+function Modal({ modalWinner, showWinner, PlayAgainButton }) {
 
     return (
         <AnimatePresence exitBeforeEnter>
@@ -20,6 +21,7 @@ function Modal({ modalWinner, showWinner }) {
                 >
                     <motion.div className="modal">
                         <p>The {showWinner} Player Wins</p>
+                        <PlayAgain PlayAgainButton={PlayAgainButton} />
                     </motion.div>
                 </motion.div>
             )}

@@ -88,11 +88,17 @@ function App() {
     setGameOver(false);
   }
 
+  function PlayAgainButton() {
+    setBoard(Array(9).fill(null))
+    setGameOver(false);
+    setModalWinner(false);
+    setModalNoWinner(false);
+  }
 
   return (
     <div className="App">
-      <ModalWinner modalWinner={modalWinner} checkWinner={checkWinner} showWinner={showWinner} />
-      <ModalNoWinner modalNoWinner={modalNoWinner} checkWinner={checkWinner} />
+      <ModalWinner modalWinner={modalWinner} checkWinner={checkWinner} showWinner={showWinner} PlayAgainButton={PlayAgainButton} />
+      <ModalNoWinner modalNoWinner={modalNoWinner} checkWinner={checkWinner} PlayAgainButton={PlayAgainButton} />
       <ScoreBoard scores={scores} xPlaying={xPlaying} />
       <Board board={board} onClick={gameOver ? Winner() : handleBoxClick} />
       <ResetButton resetBoard={resetBoard} ScoreResetBoard={ScoreResetBoard} />
