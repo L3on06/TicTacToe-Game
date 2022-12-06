@@ -9,6 +9,18 @@ const backdrop = {
     hidden: { opacity: 0 }
 }
 
+const modal = {
+    hidden: {
+        y: "-100vh",
+        opacity: 0
+    },
+    visible: {
+        y: "200px",
+        opacity: 1,
+        transition: { duration: 1, ease: "easeOut" }
+    }
+}
+
 function Modal({ modalWinner, showWinner, PlayAgainButton }) {
 
     return (
@@ -18,8 +30,13 @@ function Modal({ modalWinner, showWinner, PlayAgainButton }) {
                     variants={backdrop}
                     initial="hidden"
                     animate="visible"
+                    exit="hidden"
                 >
-                    <motion.div className="modal">
+                    <motion.div className="modal"
+                        variants={modal}
+                        initial="hidden"
+                        animate="visible"
+                    >
                         <p>The {showWinner} Player Wins</p>
                         <PlayAgain PlayAgainButton={PlayAgainButton} />
                     </motion.div>
