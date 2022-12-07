@@ -36,6 +36,7 @@ function App() {
       }
     })
 
+
     const winner = checkWinner(updateBoard);
 
     if (winner) {
