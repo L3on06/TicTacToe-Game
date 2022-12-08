@@ -8,5 +8,5 @@
     margin: 2rem auto;
     display: block;
     width: 17rem;
-    cursor: pointer;
+    cursor: url("../../../public/cursorPointer.svg"), pointer;
 }
